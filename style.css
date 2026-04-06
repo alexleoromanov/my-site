@@ -1028,21 +1028,25 @@ select.form-select:active {
 
 .bulk-bar {
     position: fixed;
-    bottom: -100px;
-    left: 17%; /* Offset for sidebar */
-    width: 60%;
+    bottom: -120px;
+    left: 250px;
+    right: 0;
+    margin: 0 auto;
+    width: calc(100% - 300px);
     max-width: 900px;
-    padding: 1rem 2.5rem !important;
+    padding: 1.2rem 2.5rem !important;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(7, 7, 16, 0.95) !important;
+    background: rgba(10, 10, 22, 0.95) !important;
     backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
     border: 2px solid var(--neon-blue) !important;
     border-bottom: none !important;
     border-radius: 20px 20px 0 0 !important;
+    box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.6);
     transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1100;
+    z-index: 1500;
 }
 
 .bulk-bar.active {
