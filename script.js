@@ -214,14 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mock state: store bookings per lane per time slot
         let laneBookings = {};
-        let totalBookingsCounter = 0;
 
         const resetBookingsBtn = document.getElementById('reset-bookings-btn');
         if (resetBookingsBtn) {
             resetBookingsBtn.addEventListener('click', () => {
                 if (confirm('Are you sure you want to clear ALL bookings and arrivals for today?')) {
                     laneBookings = {};
-                    totalBookingsCounter = 0;
                     updateDashboardLanes();
                     updateDashboardStats(); // This now handles arrivals and counters
                 }
@@ -276,8 +274,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (waitlistEl) waitlistEl.textContent = waitCount;
 
-            // 3. Today's Bookings
-            if (bookingsEl) bookingsEl.textContent = totalBookingsCounter;
+            // 3. Today's Bookings - Calculate dynamically from all lane statuses
+            let totalBookings = 0;
+            for (let lane in laneBookings) {
+                for (let time in laneBookings[lane]) {
+                    const type = laneBookings[lane][time].type;
+                    if (type === 'active' || type === 'reserve') {
+                        totalBookings++;
+                    }
+                }
+            }
+            if (bookingsEl) bookingsEl.textContent = totalBookings;
         }
 
         function updateDashboardLanes() {
