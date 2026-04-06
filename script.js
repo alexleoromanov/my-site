@@ -589,8 +589,41 @@ document.addEventListener('DOMContentLoaded', () => {
         function applyBulkAction(type) {
             if (selectedLanes.size === 0) return;
             
-            if (type === 'reserve' || type === 'active') {
-                openBulkModal(type);
+            if (type === 'reserve') {
+                openBulkModal('reserve');
+                return;
+            }
+
+            if (type === 'active') {
+                const now = new Date();
+                const currHourStr = `${now.getHours().toString().padStart(2, '0')}:00`;
+                
+                let activatedAny = false;
+                
+                selectedLanes.forEach(laneNum => {
+                    const finalLane = laneNum.padStart(2, '0');
+                    if (laneBookings[finalLane]) {
+                        // Find any reservation for this lane
+                        const reservationTimes = Object.keys(laneBookings[finalLane]).filter(t => laneBookings[finalLane][t].type === 'reserve');
+                        
+                        if (reservationTimes.length > 0) {
+                            // Pick either the current hour's reservation or the first available one
+                            const targetTime = reservationTimes.find(t => t === currHourStr) || reservationTimes[0];
+                            laneBookings[finalLane][targetTime].type = 'active';
+                            activatedAny = true;
+                        }
+                    }
+                });
+
+                if (activatedAny) {
+                    updateDashboardLanes();
+                    updateDashboardStats();
+                    clearLaneSelection();
+                    return; 
+                }
+                
+                // Fallback: If no reservations exists, open the empty form
+                openBulkModal('active');
                 return;
             }
 
