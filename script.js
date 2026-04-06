@@ -967,7 +967,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 players: playersData,
                 duration: '60'
             };
-            totalBookingsCounter++;
+            // totalBookingsCounter was removed in favor of dynamic calculation in updateDashboardStats();
 
             updateDashboardLanes();
             updateDashboardStats();
