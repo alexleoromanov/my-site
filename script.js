@@ -584,11 +584,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        let currentBulkType = 'reserve';
+
         function applyBulkAction(type) {
             if (selectedLanes.size === 0) return;
             
-            if (type === 'reserve') {
-                openBulkReserveModal();
+            if (type === 'reserve' || type === 'active') {
+                openBulkModal(type);
                 return;
             }
 
@@ -600,16 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const finalLane = laneNum.padStart(2, '0');
                 if (!laneBookings[finalLane]) laneBookings[finalLane] = {};
                 
-                if (type === 'active') {
-                    // Quick default activation if used in bulk
-                    laneBookings[finalLane][timeStr] = {
-                        type: 'active',
-                        teamName: 'Bulk Activation',
-                        numPlayers: 4,
-                        players: [{name: 'Player 1'}, {name: 'Player 2'}, {name: 'Player 3'}, {name: 'Player 4'}],
-                        duration: 60
-                    };
-                } else if (type === 'available') {
+                if (type === 'available') {
                     if (laneBookings[finalLane]) {
                         delete laneBookings[finalLane][timeStr];
                     }
@@ -623,22 +616,30 @@ document.addEventListener('DOMContentLoaded', () => {
             clearLaneSelection();
         }
 
-        // --- Bulk Reservation Modal Functions ---
+        // --- Bulk Action Modal Functions ---
         const bulkModalForm = document.getElementById('bulk-reserve-form');
         const bulkTimeSelect = document.getElementById('bulk-time-select');
+        const bulkTimeContainer = document.getElementById('bulk-time-container');
         const bulkTeamName = document.getElementById('bulk-team-name');
         const bulkPlayersCount = document.getElementById('bulk-players-count');
         const bulkDuration = document.getElementById('bulk-duration');
         const bulkPlayerInputs = document.getElementById('bulk-player-inputs');
         const confirmBulkBtn = document.getElementById('confirm-bulk-reserve');
 
-        function openBulkReserveModal() {
+        function openBulkModal(type) {
+            currentBulkType = type;
             const laneList = Array.from(selectedLanes).sort().join(', ');
-            modalLaneTitle.innerText = `Bulk Reserve: Lanes ${laneList}`;
+            
+            const isReserve = type === 'reserve';
+            modalLaneTitle.innerText = isReserve ? `Bulk Reserve: Lanes ${laneList}` : `Bulk Activate: Lanes ${laneList}`;
+            confirmBulkBtn.innerText = isReserve ? 'Confirm Multi-Lane Booking' : 'Confirm Multi-Lane Activation';
             
             // Hide standard timetable, show bulk form
             if (slotsContainer) slotsContainer.style.display = 'none';
             if (bulkModalForm) bulkModalForm.style.display = 'block';
+            
+            // Hide time selection for immediate activations
+            if (bulkTimeContainer) bulkTimeContainer.style.display = isReserve ? 'block' : 'none';
             
             // Clear prior state
             bulkTeamName.value = '';
@@ -678,7 +679,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function confirmBulkBooking() {
-            const time = bulkTimeSelect.value;
+            const now = new Date();
+            const currHourStr = `${now.getHours().toString().padStart(2, '0')}:00`;
+            const time = currentBulkType === 'active' ? currHourStr : bulkTimeSelect.value;
+            
             const team = bulkTeamName.value.trim() || 'Group Booking';
             const count = parseInt(bulkPlayersCount.value);
             const duration = parseInt(bulkDuration.value);
@@ -694,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!laneBookings[finalLane]) laneBookings[finalLane] = {};
                 
                 laneBookings[finalLane][time] = {
-                    type: 'reserve',
+                    type: currentBulkType,
                     teamName: team,
                     numPlayers: count,
                     players: players,
