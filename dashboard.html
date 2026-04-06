@@ -246,14 +246,54 @@
 
     <!-- Lane Timetable Modal (shared) -->
     <div id="lane-modal" class="modal-overlay">
-        <!-- (Rest of your modal content stays same) -->
         <div class="modal-content glass-card">
             <div class="modal-header">
                 <h2 id="modal-lane-title">Lane XX Timetable</h2>
                 <button class="close-modal">&times;</button>
             </div>
-            <div id="timetable-slots" class="modal-body">
-                <!-- Data injected by JS -->
+            <div class="modal-body" id="modal-body-content">
+                <!-- Standard Timetable Slots -->
+                <div id="slots-container" class="timetable-grid">
+                    <!-- Data injected by JS -->
+                </div>
+                
+                <!-- Bulk Reserve Form -->
+                <div id="bulk-reserve-form" class="booking-form" style="display: none; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.9rem; color: var(--neon-blue); display: block; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Start Time</label>
+                        <select id="bulk-time-select" class="form-select" style="width: 100%; height: 45px; font-size: 1.1rem;">
+                            <!-- Options populated by JS: 10:00 to 23:00 -->
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Team / Group Name</label>
+                        <input type="text" id="bulk-team-name" class="form-input" placeholder="e.g. Birthday Bash" style="width: 100%;">
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Players</label>
+                            <select id="bulk-players-count" class="form-select" style="width: 100%;">
+                                <option value="1">1 Player</option>
+                                <option value="2">2 Players</option>
+                                <option value="3">3 Players</option>
+                                <option value="4" selected>4 Players</option>
+                                <option value="5">5 Players</option>
+                                <option value="6">6 Players</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Duration (min)</label>
+                            <input type="number" id="bulk-duration" class="form-input" value="60" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Player Details & Bumpers</label>
+                        <div id="bulk-player-inputs" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <!-- Dynamic inputs here -->
+                        </div>
+                    </div>
+                    <button class="cta-button btn-green" id="confirm-bulk-reserve" style="width: 100%; margin-top: 1rem; padding: 1rem; font-weight: bold;">Confirm Multi-Lane Booking</button>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="cta-button outline-glow" id="save-lane-btn">Close</button>

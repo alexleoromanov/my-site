@@ -198,8 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('lane-modal');
         const closeBtn = document.querySelector('.close-modal');
         const saveBtn = document.getElementById('save-lane-btn');
-        const slotsContainer = document.getElementById('timetable-slots');
-        const modalTitle = document.getElementById('modal-lane-title');
+        const slotsContainer = document.getElementById('slots-container');
+        const modalLaneTitle = document.getElementById('modal-lane-title');
 
         const slots = [];
         for (let i = 9; i <= 23; i++) {
@@ -587,6 +587,11 @@ document.addEventListener('DOMContentLoaded', () => {
         function applyBulkAction(type) {
             if (selectedLanes.size === 0) return;
             
+            if (type === 'reserve') {
+                openBulkReserveModal();
+                return;
+            }
+
             const now = new Date();
             const hour = now.getHours().toString().padStart(2, '0');
             const timeStr = `${hour}:00`;
@@ -595,22 +600,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const finalLane = laneNum.padStart(2, '0');
                 if (!laneBookings[finalLane]) laneBookings[finalLane] = {};
                 
-                if (type === 'reserve' || type === 'active') {
-                    // Bulk actions need basic metadata to avoid UI errors
+                if (type === 'active') {
+                    // Quick default activation if used in bulk
                     laneBookings[finalLane][timeStr] = {
-                        type: type,
-                        teamName: 'Bulk Booking',
+                        type: 'active',
+                        teamName: 'Bulk Activation',
                         numPlayers: 4,
-                        players: [
-                            {name: 'Player 1', bumpers: false}, 
-                            {name: 'Player 2', bumpers: false}, 
-                            {name: 'Player 3', bumpers: false}, 
-                            {name: 'Player 4', bumpers: false}
-                        ],
+                        players: [{name: 'Player 1'}, {name: 'Player 2'}, {name: 'Player 3'}, {name: 'Player 4'}],
                         duration: 60
                     };
                 } else if (type === 'available') {
-                    // Correctly clear status for that time
                     if (laneBookings[finalLane]) {
                         delete laneBookings[finalLane][timeStr];
                     }
@@ -622,6 +621,115 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDashboardLanes();
             updateDashboardStats();
             clearLaneSelection();
+        }
+
+        // --- Bulk Reservation Modal Functions ---
+        const bulkModalForm = document.getElementById('bulk-reserve-form');
+        const bulkTimeSelect = document.getElementById('bulk-time-select');
+        const bulkTeamName = document.getElementById('bulk-team-name');
+        const bulkPlayersCount = document.getElementById('bulk-players-count');
+        const bulkDuration = document.getElementById('bulk-duration');
+        const bulkPlayerInputs = document.getElementById('bulk-player-inputs');
+        const confirmBulkBtn = document.getElementById('confirm-bulk-reserve');
+
+        function openBulkReserveModal() {
+            const laneList = Array.from(selectedLanes).sort().join(', ');
+            modalLaneTitle.innerText = `Bulk Reserve: Lanes ${laneList}`;
+            
+            // Hide standard timetable, show bulk form
+            if (slotsContainer) slotsContainer.style.display = 'none';
+            if (bulkModalForm) bulkModalForm.style.display = 'block';
+            
+            // Clear prior state
+            bulkTeamName.value = '';
+            
+            // Fill time options
+            bulkTimeSelect.innerHTML = '';
+            for(let h=10; h<=23; h++) {
+                const timestr = `${h.toString().padStart(2, '0')}:00`;
+                const opt = document.createElement('option');
+                opt.value = timestr;
+                opt.innerText = timestr;
+                bulkTimeSelect.appendChild(opt);
+            }
+
+            updateBulkPlayerFields(4);
+            modal.classList.add('active');
+        }
+
+        function updateBulkPlayerFields(count) {
+            if (!bulkPlayerInputs) return;
+            bulkPlayerInputs.innerHTML = '';
+            for(let i=1; i<=count; i++) {
+                const group = document.createElement('div');
+                group.className = 'player-input-group';
+                
+                group.innerHTML = `
+                    <div style="flex: 1; display: flex; align-items: center; gap: 0.8rem; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <span style="color: #aaa; font-size: 0.8rem; width: 60px;">P${i}</span>
+                        <input type="text" class="form-input bulk-p-name" placeholder="Name" style="background: transparent; border: none; padding: 0; font-size: 1rem; flex: 1;">
+                        <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; cursor: pointer; color: #888;">
+                            BUMPERS <input type="checkbox" class="bulk-p-bump">
+                        </label>
+                    </div>
+                `;
+                bulkPlayerInputs.appendChild(group);
+            }
+        }
+
+        function confirmBulkBooking() {
+            const time = bulkTimeSelect.value;
+            const team = bulkTeamName.value.trim() || 'Group Booking';
+            const count = parseInt(bulkPlayersCount.value);
+            const duration = parseInt(bulkDuration.value);
+            
+            const players = [];
+            document.querySelectorAll('.bulk-p-name').forEach((inp, idx) => {
+                const bump = document.querySelectorAll('.bulk-p-bump')[idx].checked;
+                players.push({ name: inp.value.trim() || `Player ${idx+1}`, bumpers: bump });
+            });
+
+            selectedLanes.forEach(laneNum => {
+                const finalLane = laneNum.padStart(2, '0');
+                if (!laneBookings[finalLane]) laneBookings[finalLane] = {};
+                
+                laneBookings[finalLane][time] = {
+                    type: 'reserve',
+                    teamName: team,
+                    numPlayers: count,
+                    players: players,
+                    duration: duration
+                };
+            });
+
+            updateDashboardLanes();
+            updateDashboardStats();
+            clearLaneSelection();
+            closeModal();
+        }
+
+        if (bulkPlayersCount) {
+            bulkPlayersCount.addEventListener('change', (e) => updateBulkPlayerFields(parseInt(e.target.value)));
+        }
+        if (confirmBulkBtn) {
+            confirmBulkBtn.addEventListener('click', confirmBulkBooking);
+        }
+
+        // Close logic helper
+        function closeModal() {
+            modal.classList.remove('active');
+            // Reset modal visibility state for next time
+            setTimeout(() => {
+                if (slotsContainer) slotsContainer.style.display = 'grid';
+                if (bulkModalForm) bulkModalForm.style.display = 'none';
+            }, 300);
+        }
+
+        if (closeBtn) {
+            closeBtn.onclick = closeModal;
+        }
+        if (saveBtn) {
+            saveBtn.onclick = closeModal;
         }
 
         // Listeners for Bulk Bar
@@ -640,6 +748,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (bulkCancel) bulkCancel.addEventListener('click', clearLaneSelection);
         if (multiSelectBtn) multiSelectBtn.addEventListener('click', toggleMultiSelectMode);
 
+        // Ensure standard timetable opens for single clicks
         document.querySelectorAll('.lane-box').forEach(box => {
             box.addEventListener('click', (e) => {
                 const laneNum = box.querySelector('.lane-num').innerText;
@@ -647,16 +756,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isMultiSelectActive || e.ctrlKey || e.shiftKey) {
                     toggleLaneSelection(laneNum, box);
                 } else {
-                    modalTitle.innerText = `Lane ${laneNum} Timetable`;
+                    if (modalLaneTitle) modalLaneTitle.innerText = `Lane ${laneNum} Timetable`;
+                    
+                    // Ensure bulk form is hidden and slots are shown
+                    if (slotsContainer) slotsContainer.style.display = 'grid';
+                    if (bulkModalForm) bulkModalForm.style.display = 'none';
+                    
                     renderTimetable(laneNum);
                     modal.classList.add('active');
                 }
             });
         });
 
-        closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-        saveBtn.addEventListener('click', () => modal.classList.remove('active'));
-        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+        if (modal) {
+            modal.addEventListener('click', (e) => { 
+                if (e.target === modal) closeModal(); 
+            });
+        }
 
         // 5. Upcoming Arrivals Logic
         const addArrivalBtn = document.getElementById('add-arrival-btn');
