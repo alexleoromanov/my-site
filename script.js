@@ -609,6 +609,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         ],
                         duration: 60
                     };
+                } else if (type === 'available') {
+                    // Correctly clear status for that time
+                    if (laneBookings[finalLane]) {
+                        delete laneBookings[finalLane][timeStr];
+                    }
                 } else {
                     laneBookings[finalLane][timeStr] = { type: type };
                 }
@@ -624,12 +629,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const bulkCleaning = document.getElementById('bulk-cleaning');
         const bulkActivate = document.getElementById('bulk-activate');
         const bulkService = document.getElementById('bulk-service');
+        const bulkAvailable = document.getElementById('bulk-available');
         const bulkCancel = document.getElementById('bulk-cancel');
 
         if (bulkReserve) bulkReserve.addEventListener('click', () => applyBulkAction('reserve'));
         if (bulkCleaning) bulkCleaning.addEventListener('click', () => applyBulkAction('cleaning'));
         if (bulkActivate) bulkActivate.addEventListener('click', () => applyBulkAction('active'));
         if (bulkService) bulkService.addEventListener('click', () => applyBulkAction('service'));
+        if (bulkAvailable) bulkAvailable.addEventListener('click', () => applyBulkAction('available'));
         if (bulkCancel) bulkCancel.addEventListener('click', clearLaneSelection);
         if (multiSelectBtn) multiSelectBtn.addEventListener('click', toggleMultiSelectMode);
 
