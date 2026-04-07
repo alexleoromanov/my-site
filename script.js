@@ -1195,10 +1195,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         function deleteTournament(id) {
-            tournamentsState = tournamentsState.filter(t => t.id !== id);
-            renderTournaments();
-            updateDashboardLanes();
-            updateDashboardStats();
+            if (confirm('Are you sure you want to delete this tournament?')) {
+                tournamentsState = tournamentsState.filter(t => t.id != id);
+                renderTournaments();
+                updateDashboardLanes();
+                updateDashboardStats();
+            }
         }
 
         if (addTourneyBtn) addTourneyBtn.addEventListener('click', () => openTourneyModal());
