@@ -244,12 +244,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 let isLaneActive = false;
                 let isLaneBooked = false;
 
+                // Check standard bookings
                 for (const slot in bookings) {
                     const type = bookings[slot].type;
-                    // Active status: currently playing, service, or cleaning
                     if (type === 'active' || type === 'service' || type === 'cleaning') isLaneActive = true;
-                    // Booked status: reserved for later
                     if (type === 'reserve') isLaneBooked = true;
+                }
+
+                // Check tournaments
+                if (typeof tournamentsState !== 'undefined') {
+                    const activeTourney = tournamentsState.find(t => t.status === 'live' && t.lanes && t.lanes.includes(laneNum));
+                    if (activeTourney) isLaneActive = true;
+                    
+                    const waitingTourney = tournamentsState.find(t => t.status === 'waiting' && t.lanes && t.lanes.includes(laneNum));
+                    if (waitingTourney && !isLaneActive) isLaneBooked = true;
                 }
 
                 if (isLaneActive) activeCount++;
@@ -299,6 +307,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (b.type === 'reserve' && currentState === 'available') { currentState = 'reserve'; stateTime = time; }
                     }
 
+                    // Tournament Overrides
+                    if (typeof tournamentsState !== 'undefined') {
+                        const liveT = tournamentsState.find(t => t.status === 'live' && t.lanes && t.lanes.includes(laneNum));
+                        if (liveT) {
+                            currentState = 'tourney-live';
+                        } else {
+                            const waitT = tournamentsState.find(t => t.status === 'waiting' && t.lanes && t.lanes.includes(laneNum));
+                            if (waitT && (currentState === 'available' || currentState === 'reserve')) {
+                                currentState = 'tourney-waiting';
+                            }
+                        }
+                    }
+
                     const isSelected = typeof selectedLanes !== 'undefined' && selectedLanes.has(laneNum);
                     const baseClass = isSelected ? 'lane-box selected' : 'lane-box';
 
@@ -322,6 +343,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         badge.className = 'status-badge ping-pink';
                         badge.style.color = '';
                         badge.innerText = `Reserved (${stateTime})`;
+                    } else if (currentState === 'tourney-live') {
+                        box.className = `${baseClass} use`;
+                        badge.className = 'status-badge ping-pink';
+                        badge.style.color = 'var(--neon-blue)';
+                        badge.innerText = 'TOURNEY (LIVE)';
+                    } else if (currentState === 'tourney-waiting') {
+                        box.className = `${baseClass} reserved`;
+                        badge.className = 'status-badge outline-glow';
+                        badge.style.color = '#ffc800';
+                        badge.innerText = 'TOURNEY (WAIT)';
                     } else {
                         box.className = `${baseClass} available`;
                         badge.className = 'status-badge normal-blue';
@@ -1166,6 +1197,8 @@ document.addEventListener('DOMContentLoaded', () => {
         function deleteTournament(id) {
             tournamentsState = tournamentsState.filter(t => t.id !== id);
             renderTournaments();
+            updateDashboardLanes();
+            updateDashboardStats();
         }
 
         if (addTourneyBtn) addTourneyBtn.addEventListener('click', () => openTourneyModal());
@@ -1206,6 +1239,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 tourneyModal.classList.remove('active');
                 renderTournaments();
+                updateDashboardLanes();
+                updateDashboardStats();
             });
         }
 
