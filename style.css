@@ -202,8 +202,8 @@ h1, h2, h3 {
     border: 1px solid rgba(255,255,255,0.1);
     background: rgba(255,255,255,0.03);
     color: var(--text-muted);
-    font-size: 0.72rem;
-    padding: 0.6rem 0.4rem;
+    font-size: 0.9rem; /* Much bigger */
+    padding: 0.8rem 1rem;
     text-transform: uppercase;
     white-space: nowrap;
     display: flex;
@@ -223,19 +223,19 @@ h1, h2, h3 {
 .btn-stage.active {
     border-color: var(--neon-blue);
     color: var(--neon-blue);
-    background: rgba(0, 243, 255, 0.15);
+    background: rgba(0, 243, 255, 0.2);
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(0, 243, 255, 0.2);
     font-weight: bold;
 }
 
 #stage-selection-board {
     backdrop-filter: blur(12px);
-    background: #0a0f1c !important; /* Solid dark background to hide fields behind it */
+    background: #0a0f1c !important;
     border-radius: 12px;
-    width: 260px; /* Even wider to prevent text squeeze */
+    width: 220px; /* Wider and easier to click vertically */
     border: 1px solid var(--neon-blue) !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 243, 255, 0.2) !important;
-    z-index: 999 !important; /* Ensure it's on top of everything */
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 243, 255, 0.3) !important;
+    z-index: 999 !important;
 }
 
 #tourney-stage-display:hover {
