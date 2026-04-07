@@ -1247,6 +1247,68 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // 7. Prize Pool and Leaderboard Edit Logic
+        const editPrizeBtn = document.getElementById('edit-prize-btn');
+        const prizeView = document.getElementById('prize-view');
+        const prizeEdit = document.getElementById('prize-edit');
+        const savePrizeBtn = document.getElementById('save-prize-btn');
+
+        if (editPrizeBtn) {
+            editPrizeBtn.addEventListener('click', () => {
+                prizeView.style.display = 'none';
+                prizeEdit.style.display = 'block';
+            });
+        }
+
+        if (savePrizeBtn) {
+            savePrizeBtn.addEventListener('click', () => {
+                const total = document.getElementById('prize-total-input').value;
+                const secured = document.getElementById('prize-secured-input').value;
+                const potential = document.getElementById('prize-potential-input').value;
+
+                // Simple validation to ensure prefixing, etc. can be done here if needed
+                document.getElementById('prize-total-display').textContent = total.startsWith('$') ? total : `$${total}`;
+                document.getElementById('prize-secured-display').textContent = secured.startsWith('$') ? secured : `$${secured}`;
+                document.getElementById('prize-potential-display').textContent = potential.startsWith('$') ? potential : `$${potential}`;
+
+                prizeEdit.style.display = 'none';
+                prizeView.style.display = 'block';
+            });
+        }
+
+        const editLbBtn = document.getElementById('edit-leaderboard-btn');
+        const lbView = document.getElementById('leaderboard-view');
+        const lbEdit = document.getElementById('leaderboard-edit');
+        const saveLbBtn = document.getElementById('save-leaderboard-btn');
+
+        if (editLbBtn) {
+            editLbBtn.addEventListener('click', () => {
+                lbView.style.display = 'none';
+                lbEdit.style.display = 'block';
+            });
+        }
+
+        if (saveLbBtn) {
+            saveLbBtn.addEventListener('click', () => {
+                const teamInputs = document.querySelectorAll('.lb-team-input');
+                const ptsInputs = document.querySelectorAll('.lb-pts-input');
+                const teamDisplays = document.querySelectorAll('.lb-team-display');
+                const ptsDisplays = document.querySelectorAll('.lb-pts-display');
+
+                for (let i = 0; i < 3; i++) {
+                    if (teamInputs[i] && teamDisplays[i]) {
+                        teamDisplays[i].textContent = `${i + 1}. ${teamInputs[i].value}`;
+                    }
+                    if (ptsInputs[i] && ptsDisplays[i]) {
+                        ptsDisplays[i].textContent = ptsInputs[i].value.includes('pts') ? ptsInputs[i].value : `${ptsInputs[i].value} pts`;
+                    }
+                }
+
+                lbEdit.style.display = 'none';
+                lbView.style.display = 'block';
+            });
+        }
+
         // Initialize
         renderTournaments();
     }

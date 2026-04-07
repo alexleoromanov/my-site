@@ -364,35 +364,74 @@
 
                     <!-- Right: Quick Links / Rankings -->
                     <div style="display: flex; flex-direction: column; gap: 2rem;">
-                        <div class="glass-card" style="padding: 1.5rem;">
-                            <h3>Prize Pool</h3>
-                            <div class="stat-number neon-text-pink" style="font-size: 2.5rem; margin-top: 1rem;">
-                                $2,450.00</div>
-                            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0;">Secured: $1,200 |
-                                Potential: $1,250</p>
+                        <div class="glass-card" style="padding: 1.5rem; position: relative;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h3 style="margin: 0;">Prize Pool</h3>
+                                <button id="edit-prize-btn" class="btn-small outline-glow" style="background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-size: 0.7rem;">EDIT</button>
+                            </div>
+                            
+                            <!-- Display View -->
+                            <div id="prize-view">
+                                <div id="prize-total-display" class="stat-number neon-text-pink" style="font-size: 2.5rem; margin-top: 1rem;">$2,450.00</div>
+                                <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0;">Secured: <span id="prize-secured-display">$1,200</span> | Potential: <span id="prize-potential-display">$1,250</span></p>
+                            </div>
+
+                            <!-- Edit View -->
+                            <div id="prize-edit" style="display: none; margin-top: 1rem;">
+                                <label style="font-size: 0.8rem; color: #aaa;">Total Prize ($)</label>
+                                <input type="text" id="prize-total-input" class="form-input" style="width: 100%; margin-bottom: 0.5rem;" value="2,450.00">
+                                
+                                <label style="font-size: 0.8rem; color: #aaa;">Secured ($)</label>
+                                <input type="text" id="prize-secured-input" class="form-input" style="width: 100%; margin-bottom: 0.5rem;" value="1,200">
+                                
+                                <label style="font-size: 0.8rem; color: #aaa;">Potential ($)</label>
+                                <input type="text" id="prize-potential-input" class="form-input" style="width: 100%; margin-bottom: 1rem;" value="1,250">
+                                
+                                <button id="save-prize-btn" class="cta-button btn-small btn-blue" style="width: 100%;">SAVE PRIZE POOL</button>
+                            </div>
                         </div>
 
-                        <div class="glass-card" style="padding: 1.5rem;">
-                            <h3>Current Leaderboard</h3>
-                            <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
-                                <div
-                                    style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                    <span class="text-white">1. TEAM VORTEX</span>
-                                    <span class="neon-text-blue">1,420 pts</span>
-                                </div>
-                                <div
-                                    style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                    <span class="text-white">2. THE STRIKERS</span>
-                                    <span class="neon-text-blue">1,385 pts</span>
-                                </div>
-                                <div
-                                    style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                    <span class="text-white">3. COSMIC BOWLERS</span>
-                                    <span class="neon-text-blue">1,310 pts</span>
-                                </div>
+                        <div class="glass-card" style="padding: 1.5rem; position: relative;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h3 style="margin: 0;">Current Leaderboard</h3>
+                                <button id="edit-leaderboard-btn" class="btn-small outline-glow" style="background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-size: 0.7rem;">EDIT</button>
                             </div>
-                            <button class="cta-button btn-small outline-glow"
-                                style="width: 100%; margin-top: 1.5rem;">FULL STANDINGS</button>
+
+                            <!-- Display View -->
+                            <div id="leaderboard-view">
+                                <div id="leaderboard-list-display" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <span class="text-white lb-team-display">1. TEAM VORTEX</span>
+                                        <span class="neon-text-blue lb-pts-display">1,420 pts</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <span class="text-white lb-team-display">2. THE STRIKERS</span>
+                                        <span class="neon-text-blue lb-pts-display">1,385 pts</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <span class="text-white lb-team-display">3. COSMIC BOWLERS</span>
+                                        <span class="neon-text-blue lb-pts-display">1,310 pts</span>
+                                    </div>
+                                </div>
+                                <button class="cta-button btn-small outline-glow" style="width: 100%; margin-top: 1.5rem;">FULL STANDINGS</button>
+                            </div>
+
+                            <!-- Edit View -->
+                            <div id="leaderboard-edit" style="display: none; margin-top: 1rem;">
+                                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <input type="text" class="form-input lb-team-input" value="TEAM VORTEX" style="flex: 2;">
+                                    <input type="text" class="form-input lb-pts-input" value="1,420" style="flex: 1; text-align: right;">
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <input type="text" class="form-input lb-team-input" value="THE STRIKERS" style="flex: 2;">
+                                    <input type="text" class="form-input lb-pts-input" value="1,385" style="flex: 1; text-align: right;">
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                                    <input type="text" class="form-input lb-team-input" value="COSMIC BOWLERS" style="flex: 2;">
+                                    <input type="text" class="form-input lb-pts-input" value="1,310" style="flex: 1; text-align: right;">
+                                </div>
+                                <button id="save-leaderboard-btn" class="cta-button btn-small btn-blue" style="width: 100%;">SAVE LEADERBOARD</button>
+                            </div>
                         </div>
                     </div>
                 </div>
