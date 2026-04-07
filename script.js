@@ -214,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mock state: store bookings per lane per time slot
         let laneBookings = {};
-        let totalBookingsCounter = 0;
 
         const resetBookingsBtn = document.getElementById('reset-bookings-btn');
         if (resetBookingsBtn) {
@@ -277,7 +276,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (waitlistEl) waitlistEl.textContent = waitCount;
 
             // 3. Today's Bookings - cumulative tally for the day
-            if (bookingsEl) bookingsEl.textContent = totalBookingsCounter;
+            const uniqueBookings = new Set();
+            for (const lane in laneBookings) {
+                for (const time in laneBookings[lane]) {
+                    const b = laneBookings[lane][time];
+                    // Create a unique key for the booking
+                    const bookingKey = `${time}|${b.teamName || 'Independent'}|${b.numPlayers || '1'}`;
+                    uniqueBookings.add(bookingKey);
+                }
+            }
+            if (bookingsEl) bookingsEl.textContent = uniqueBookings.size;
         }
 
         function updateDashboardLanes() {
@@ -526,7 +534,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             players: playersData,
                             duration: duration
                         };
-                        totalBookingsCounter++;
                         
                         renderTimetable(laneNum);
                         updateDashboardStats(); // This will now sync arrivals too
@@ -826,21 +833,31 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear current list
             arrivalsTbody.innerHTML = '';
             
-            // Collect all reservations across all lanes
-            const arrivals = [];
+            // Collect and group reservations across all lanes
+            const groupedArrivals = new Map();
+
             for (const laneNum in laneBookings) {
                 const bookings = laneBookings[laneNum];
                 for (const time in bookings) {
                     if (bookings[time].type === 'reserve') {
-                        arrivals.push({
-                            time: time,
-                            name: bookings[time].teamName,
-                            party: bookings[time].numPlayers,
-                            lane: laneNum
-                        });
+                        const b = bookings[time];
+                        const key = `${time}|${b.teamName}|${b.numPlayers}`;
+                        
+                        if (!groupedArrivals.has(key)) {
+                            groupedArrivals.set(key, {
+                                time: time,
+                                name: b.teamName,
+                                party: b.numPlayers,
+                                lanes: [laneNum]
+                            });
+                        } else {
+                            groupedArrivals.get(key).lanes.push(laneNum);
+                        }
                     }
                 }
             }
+            
+            const arrivals = Array.from(groupedArrivals.values());
             
             // Sort by time
             arrivals.sort((a, b) => a.time.localeCompare(b.time));
@@ -853,16 +870,22 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 arrivals.forEach(arr => {
                     const tr = document.createElement('tr');
+                    const lanesStr = arr.lanes.sort().join(', ');
                     tr.innerHTML = `
                         <td>${arr.time}</td>
                         <td>${arr.name}</td>
                         <td>${arr.party}</td>
-                        <td>${arr.lane}</td>
-                        <td><button class="cta-button btn-small btn-red remove-arrival" data-lane="${arr.lane}" data-time="${arr.time}">&times;</button></td>
+                        <td>${lanesStr}</td>
+                        <td><button class="cta-button btn-small btn-red remove-arrival" data-lanes="${lanesStr}" data-time="${arr.time}">&times;</button></td>
                     `;
                     
                     tr.querySelector('.remove-arrival').addEventListener('click', () => {
-                        delete laneBookings[arr.lane][arr.time];
+                        const lanesToRemove = lanesStr.split(/\s*,\s*/);
+                        lanesToRemove.forEach(lane => {
+                            if (laneBookings[lane]) {
+                                delete laneBookings[lane][arr.time];
+                            }
+                        });
                         updateDashboardLanes();
                         updateDashboardStats();
                     });
@@ -940,33 +963,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }).filter(p => p !== null);
 
             // Sync with Lane Timetables
-            let targetLane = lRaw;
-            if (lRaw === 'Auto' || lRaw === '') {
+            const lanesList = lRaw === 'Auto' || lRaw === '' ? [] : lRaw.split(/\s*,\s*|\s+/).filter(x => x !== "");
+            
+            if (lanesList.length === 0) {
                 // Find first available lane for this time slot (simplified for now)
                 for (let i = 1; i <= 16; i++) {
                     const lNum = i < 10 ? `0${i}` : `${i}`;
                     if (!laneBookings[lNum] || !laneBookings[lNum][timeStr]) {
-                        targetLane = lNum;
+                        lanesList.push(lNum);
                         break;
                     }
                 }
             }
 
-            const finalLane = targetLane.toString().padStart(2, '0');
-            if (!laneBookings[finalLane]) laneBookings[finalLane] = {};
-            
-            laneBookings[finalLane][timeStr] = {
-                type: 'reserve',
-                teamName: n,
-                numPlayers: p,
-                players: playersData,
-                duration: '60'
-            };
-            totalBookingsCounter++;
-            // totalBookingsCounter was removed in favor of dynamic calculation in updateDashboardStats();
-
-            updateDashboardLanes();
-            updateDashboardStats();
+            lanesList.forEach(lane => {
+                const finalLane = lane.toString().padStart(2, '0');
+                if (!laneBookings[finalLane]) laneBookings[finalLane] = {};
+                
+                    laneBookings[finalLane][timeStr] = {
+                        type: 'reserve',
+                        teamName: n,
+                        numPlayers: p,
+                        players: playersData,
+                        duration: '60'
+                    };
+                });
+    
+                updateDashboardLanes();
+                updateDashboardStats();
             
             // Clear form and hide
             document.getElementById('arrival-name').value = '';
