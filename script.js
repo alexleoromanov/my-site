@@ -214,12 +214,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mock state: store bookings per lane per time slot
         let laneBookings = {};
+        let cumulativeBookingsCount = 0; // Cumulative tally that doesn't reset on clear
 
         const resetBookingsBtn = document.getElementById('reset-bookings-btn');
         if (resetBookingsBtn) {
             resetBookingsBtn.addEventListener('click', () => {
                 if (confirm('Are you sure you want to clear ALL bookings and arrivals for today?')) {
                     laneBookings = {};
+                    cumulativeBookingsCount = 0; 
                     updateDashboardLanes();
                     updateDashboardStats(); // This now handles arrivals and counters
                 }
@@ -274,17 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (waitlistEl) waitlistEl.textContent = waitCount;
 
-            // 3. Today's Bookings - cumulative tally for the day
-            const uniqueBookings = new Set();
-            for (const lane in laneBookings) {
-                for (const time in laneBookings[lane]) {
-                    const b = laneBookings[lane][time];
-                    // Create a unique key for the booking
-                    const bookingKey = `${time}|${b.teamName || 'Independent'}|${b.numPlayers || '1'}`;
-                    uniqueBookings.add(bookingKey);
-                }
-            }
-            if (bookingsEl) bookingsEl.textContent = uniqueBookings.size;
+            if (bookingsEl) bookingsEl.textContent = cumulativeBookingsCount;
         }
 
         function updateDashboardLanes() {
@@ -534,8 +526,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             duration: duration
                         };
                         
+                        cumulativeBookingsCount++;
                         renderTimetable(laneNum);
-                        updateDashboardStats(); // This will now sync arrivals too
+                        updateDashboardStats(); 
                     });
                 }
                 slotsContainer.appendChild(slotDiv);
@@ -741,6 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     players: players,
                     duration: duration
                 };
+                cumulativeBookingsCount++;
             });
             
             updateDashboardLanes();
@@ -984,6 +978,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
                 });
     
+                cumulativeBookingsCount++;
                 updateDashboardLanes();
                 updateDashboardStats();
             
