@@ -990,5 +990,130 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switchTab('overview');
         updateDashboardStats();
+
+        // 6. Tournament Management Logic
+        let tournamentsState = [
+            { id: 1, name: "Cosmic Bowl Open '26", status: 'live', stage: 'QUARTERFINALS', players: 32, total: 64 },
+            { id: 2, name: "Saturday Night League", status: 'waiting', stage: 'WAITING', players: 0, total: 48 }
+        ];
+
+        const tourneyListContainer = document.getElementById('tournament-list-container');
+        const tourneyModal = document.getElementById('tournament-modal');
+        const addTourneyBtn = document.getElementById('add-tournament-btn');
+        const saveTourneyBtn = document.getElementById('save-tourney-btn');
+        const closeTourneyModal = document.getElementById('close-tourney-modal');
+
+        function renderTournaments() {
+            if (!tourneyListContainer) return;
+            tourneyListContainer.innerHTML = '';
+
+            tournamentsState.forEach(t => {
+                const card = document.createElement('div');
+                card.className = `glass-card tourney-card-glow ${t.status === 'live' ? 'active-tourney' : ''}`;
+                card.style.padding = '1.5rem';
+                card.style.marginBottom = '1.5rem';
+                if (t.status === 'live') card.style.borderLeft = '4px solid var(--neon-blue)';
+
+                const progress = t.total > 0 ? (t.players / t.total) * 100 : 0;
+                const statusColor = t.status === 'live' ? 'var(--neon-blue)' : (t.status === 'completed' ? '#00ff66' : '#888');
+
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h3 class="${t.status === 'live' ? 'neon-text-blue' : 'text-white'}" style="margin: 0; font-size: 1.2rem;">${t.name}</h3>
+                            <p class="text-muted" style="margin: 0.5rem 0 0; font-size: 0.9rem;">
+                                Status: <span style="color: ${statusColor}; font-weight: bold; text-transform: uppercase;">${t.status}</span> 
+                                | Players: ${t.players} / ${t.total}
+                            </p>
+                        </div>
+                        <span class="status-badge ${t.status === 'live' ? 'normal-blue' : 'normal-grey'}">${t.stage.toUpperCase()}</span>
+                    </div>
+                    <div style="margin-top: 1.5rem; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden;">
+                        <div style="width: ${progress}%; height: 100%; background: ${statusColor}; box-shadow: 0 0 10px ${statusColor};"></div>
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button class="cta-button btn-small outline-glow edit-tourney-btn" data-id="${t.id}" style="flex: 1;">EDIT</button>
+                        <button class="cta-button btn-small btn-red delete-tourney-btn" data-id="${t.id}" style="flex: 0.3;">&times;</button>
+                    </div>
+                `;
+
+                card.querySelector('.edit-tourney-btn').addEventListener('click', () => openTourneyModal(t.id));
+                card.querySelector('.delete-tourney-btn').addEventListener('click', () => deleteTournament(t.id));
+
+                tourneyListContainer.appendChild(card);
+            });
+        }
+
+        function openTourneyModal(editId = null) {
+            if (!tourneyModal) return;
+            
+            const title = document.getElementById('tourney-modal-title');
+            const idInput = document.getElementById('tourney-edit-id');
+            const nameInput = document.getElementById('tourney-name-input');
+            const statusSelect = document.getElementById('tourney-status-select');
+            const stageInput = document.getElementById('tourney-stage-input');
+            const playersInput = document.getElementById('tourney-players-input');
+            const totalInput = document.getElementById('tourney-total-input');
+
+            if (editId) {
+                const t = tournamentsState.find(x => x.id === editId);
+                title.innerText = 'Edit Tournament';
+                idInput.value = t.id;
+                nameInput.value = t.name;
+                statusSelect.value = t.status;
+                stageInput.value = t.stage;
+                playersInput.value = t.players;
+                totalInput.value = t.total;
+            } else {
+                title.innerText = 'Create Tournament';
+                idInput.value = '';
+                nameInput.value = '';
+                statusSelect.value = 'waiting';
+                stageInput.value = 'Registration';
+                playersInput.value = '0';
+                totalInput.value = '64';
+            }
+
+            tourneyModal.classList.add('active');
+        }
+
+        function deleteTournament(id) {
+            if (confirm('Are you sure you want to remove this tournament?')) {
+                tournamentsState = tournamentsState.filter(t => t.id !== id);
+                renderTournaments();
+            }
+        }
+
+        if (addTourneyBtn) addTourneyBtn.addEventListener('click', () => openTourneyModal());
+        if (closeTourneyModal) closeTourneyModal.addEventListener('click', () => tourneyModal.classList.remove('active'));
+        
+        if (saveTourneyBtn) {
+            saveTourneyBtn.addEventListener('click', () => {
+                const id = document.getElementById('tourney-edit-id').value;
+                const tourneyData = {
+                    name: document.getElementById('tourney-name-input').value || 'New Tournament',
+                    status: document.getElementById('tourney-status-select').value,
+                    stage: document.getElementById('tourney-stage-input').value || 'TBD',
+                    players: parseInt(document.getElementById('tourney-players-input').value) || 0,
+                    total: parseInt(document.getElementById('tourney-total-input').value) || 64
+                };
+
+                if (id) {
+                    // Update existing
+                    const index = tournamentsState.findIndex(t => t.id == id);
+                    tournamentsState[index] = { ...tournamentsState[index], ...tourneyData };
+                } else {
+                    // Create new
+                    const newId = tournamentsState.length > 0 ? Math.max(...tournamentsState.map(t => t.id)) + 1 : 1;
+                    tournamentsState.push({ id: newId, ...tourneyData });
+                }
+
+                tourneyModal.classList.remove('active');
+                renderTournaments();
+            });
+        }
+
+        // Initialize
+        renderTournaments();
     }
 });

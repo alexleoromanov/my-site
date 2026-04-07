@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,12 @@
     <title>Dashboard | StrikeZone Staff</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="dashboard-body" id="dashboard-app">
 
     <!-- Fixed Sidebar -->
@@ -26,7 +30,8 @@
             <a href="#" id="nav-tournaments">Tournaments</a>
         </nav>
         <div class="sidebar-footer">
-            <a href="index.html" class="outline-glow btn-small" style="padding: 0.5rem 1rem; font-size: 0.8rem;">&larr; Exit to Public Site</a>
+            <a href="index.html" class="outline-glow btn-small" style="padding: 0.5rem 1rem; font-size: 0.8rem;">&larr;
+                Exit to Public Site</a>
         </div>
     </aside>
 
@@ -35,7 +40,8 @@
         <!-- Top bar -->
         <header class="dash-topbar glass-nav">
             <div class="dash-breadcrumbs">
-                <span class="neon-text-blue">Terminal</span> / <span class="text-white" id="dash-breadcrumb-active">Overview</span>
+                <span class="neon-text-blue">Terminal</span> / <span class="text-white"
+                    id="dash-breadcrumb-active">Overview</span>
             </div>
             <div class="dash-user">
                 <span id="dash-clock" class="text-muted" style="margin-right: 2rem;">00:00:00</span>
@@ -67,7 +73,8 @@
                     <div class="stat-card glass-card" style="position: relative;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                             <h3>Today's Bookings</h3>
-                            <button id="reset-bookings-btn" class="cta-button btn-small btn-red" style="padding: 0.2rem 0.5rem; font-size: 0.65rem; min-width: auto; height: auto;">RESET</button>
+                            <button id="reset-bookings-btn" class="cta-button btn-small btn-red"
+                                style="padding: 0.2rem 0.5rem; font-size: 0.65rem; min-width: auto; height: auto;">RESET</button>
                         </div>
                         <div class="stat-number text-white" id="stat-today-bookings">0</div>
                     </div>
@@ -79,26 +86,43 @@
                     <div class="glass-card panel-lanes">
                         <div class="panel-header">
                             <h2>Lane Status Overview</h2>
-                            <button class="cta-button outline-glow btn-small" id="multi-select-btn">MULTI-SELECT: OFF</button>
+                            <button class="cta-button outline-glow btn-small" id="multi-select-btn">MULTI-SELECT:
+                                OFF</button>
                         </div>
                         <div class="lane-grid">
                             <!-- Populated by JS -->
-                            <div class="lane-box available"><span class="lane-num">01</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">02</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">03</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">04</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">05</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">06</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">07</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">08</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">09</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">10</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">11</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">12</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">13</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">14</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">15</span><span class="status-badge normal-blue">Available</span></div>
-                            <div class="lane-box available"><span class="lane-num">16</span><span class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">01</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">02</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">03</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">04</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">05</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">06</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">07</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">08</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">09</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">10</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">11</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">12</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">13</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">14</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">15</span><span
+                                    class="status-badge normal-blue">Available</span></div>
+                            <div class="lane-box available"><span class="lane-num">16</span><span
+                                    class="status-badge normal-blue">Available</span></div>
                         </div>
                     </div>
 
@@ -110,27 +134,60 @@
                         </div>
 
                         <!-- Add Arrival Form (hidden by default) -->
-                        <div id="arrival-form" style="display: none; padding: 2rem; border-bottom: 3px solid var(--neon-blue); animation: fadeIn 0.3s ease; background: #010105;">
+                        <div id="arrival-form"
+                            style="display: none; padding: 2rem; border-bottom: 3px solid var(--neon-blue); animation: fadeIn 0.3s ease; background: #010105;">
                             <!-- Form content already handled by JS -->
                             <div style="margin-bottom: 1.5rem;">
                                 <label>Arrival Time</label>
                                 <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                    <select class="form-select" id="arrival-hour" style="flex: 1;"><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18" selected>18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option></select>
+                                    <select class="form-select" id="arrival-hour" style="flex: 1;">
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18" selected>18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                    </select>
                                     <span style="color: #fff;">:</span>
-                                    <select class="form-select" id="arrival-minute" style="flex: 1;"><option value="00" selected>00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select>
+                                    <select class="form-select" id="arrival-minute" style="flex: 1;">
+                                        <option value="00" selected>00</option>
+                                        <option value="15">15</option>
+                                        <option value="30">30</option>
+                                        <option value="45">45</option>
+                                    </select>
                                 </div>
                             </div>
                             <div style="margin-bottom: 1.5rem;">
                                 <label>Team / Group Name</label>
-                                <input type="text" class="form-input" id="arrival-name" placeholder="Name..." style="width: 100%;">
+                                <input type="text" class="form-input" id="arrival-name" placeholder="Name..."
+                                    style="width: 100%;">
                             </div>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
-                                <div><label>Party</label><select class="form-select" id="arrival-party"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option><option value="5">5</option><option value="6">6</option></select></div>
-                                <div><label>Lane (Auto if empty)</label><input type="text" class="form-input" id="arrival-lane" placeholder="01" style="text-align: center;"></div>
+                                <div><label>Party</label><select class="form-select" id="arrival-party">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4" selected>4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select></div>
+                                <div><label>Lane (Auto if empty)</label><input type="text" class="form-input"
+                                        id="arrival-lane" placeholder="01" style="text-align: center;"></div>
                             </div>
-                            
+
                             <div id="arrival-players-container" style="margin-bottom: 1.5rem;">
-                                <label style="font-size: 0.8rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Player Names & Bumpers</label>
+                                <label
+                                    style="font-size: 0.8rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Player
+                                    Names & Bumpers</label>
                                 <div id="arrival-player-inputs" style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
                                     <!-- Dynamic inputs here -->
                                 </div>
@@ -154,7 +211,9 @@
                                 </thead>
                                 <tbody id="arrivals-tbody">
                                     <tr class="empty-row">
-                                        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem 0;">No upcoming arrivals currently scheduled.</td>
+                                        <td colspan="5"
+                                            style="text-align: center; color: var(--text-muted); padding: 2rem 0;">No
+                                            upcoming arrivals currently scheduled.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -171,24 +230,41 @@
                         <span class="status-badge normal-blue" id="stat-lanes-active-console">0 Lanes Active</span>
                     </div>
                     <!-- Full Width Grid -->
-                    <div class="lane-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    <div class="lane-grid"
+                        style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
                         <!-- Grid elements stay same, updateDashboardLanes will populate both -->
-                        <div class="lane-box available"><span class="lane-num">01</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">02</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">03</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">04</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">05</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">06</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">07</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">08</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">09</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">10</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">11</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">12</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">13</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">14</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">15</span><span class="status-badge normal-blue">Available</span></div>
-                        <div class="lane-box available"><span class="lane-num">16</span><span class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">01</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">02</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">03</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">04</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">05</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">06</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">07</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">08</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">09</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">10</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">11</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">12</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">13</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">14</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">15</span><span
+                                class="status-badge normal-blue">Available</span></div>
+                        <div class="lane-box available"><span class="lane-num">16</span><span
+                                class="status-badge normal-blue">Available</span></div>
                     </div>
                 </div>
             </section>
@@ -200,7 +276,8 @@
                         <h2>Active & Upcoming Reservations</h2>
                         <button class="cta-button primary-glow btn-small" id="refresh-bookings-btn">REFRESH</button>
                     </div>
-                    <div class="bookings-table-container outline-glow" style="margin-top: 1rem; border-radius: 8px; overflow: hidden;">
+                    <div class="bookings-table-container outline-glow"
+                        style="margin-top: 1rem; border-radius: 8px; overflow: hidden;">
                         <table class="arrivals-table">
                             <thead>
                                 <tr>
@@ -221,9 +298,11 @@
 
             <!-- POS View -->
             <section id="view-pos" class="dash-view">
-                <div class="glass-card" style="padding: 3rem; text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                <div class="glass-card"
+                    style="padding: 3rem; text-align: center; display: flex; flex-direction: column; justify-content: center;">
                     <h1 class="neon-text-blue" style="font-size: 3rem;">POINT OF SALE</h1>
-                    <p class="text-muted" style="font-size: 1.2rem; margin-top: 1rem;">ORDER MANAGEMENT SYSTEM OFFLINE</p>
+                    <p class="text-muted" style="font-size: 1.2rem; margin-top: 1rem;">ORDER MANAGEMENT SYSTEM OFFLINE
+                    </p>
                     <button class="cta-button outline-glow" style="margin-top: 2rem;">CONNECT TO TERMINAL</button>
                 </div>
             </section>
@@ -235,23 +314,31 @@
                     <div class="glass-card" style="padding: 2rem;">
                         <div class="panel-header">
                             <h2>Tournament Management</h2>
-                            <button class="cta-button btn-blue btn-small">NEW TOURNAMENT</button>
+                            <button class="cta-button btn-blue btn-small" id="add-tournament-btn">NEW TOURNAMENT</button>
                         </div>
-                        <div class="tournament-list" style="margin-top: 2rem;">
+                        <div class="tournament-list" id="tournament-list-container" style="margin-top: 2rem;">
                             <!-- Active Tournament Card -->
-                            <div class="glass-card tourney-card-glow" style="padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--neon-blue);">
+                            <div class="glass-card tourney-card-glow"
+                                style="padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--neon-blue);">
                                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                                     <div>
-                                        <h3 class="neon-text-blue" style="margin: 0; font-size: 1.2rem;">Cosmic Bowl Open '26</h3>
-                                        <p class="text-muted" style="margin: 0.5rem 0 0; font-size: 0.9rem;">Status: <span style="color: var(--neon-blue); font-weight: bold;">LIVE</span> | Players: 32 / 64</p>
+                                        <h3 class="neon-text-blue" style="margin: 0; font-size: 1.2rem;">Cosmic Bowl
+                                            Open '26</h3>
+                                        <p class="text-muted" style="margin: 0.5rem 0 0; font-size: 0.9rem;">Status:
+                                            <span style="color: var(--neon-blue); font-weight: bold;">LIVE</span> |
+                                            Players: 32 / 64</p>
                                     </div>
                                     <span class="status-badge normal-blue">QUARTERFINALS</span>
                                 </div>
-                                <div style="margin-top: 1.5rem; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden;">
-                                    <div style="width: 50%; height: 100%; background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue);"></div>
+                                <div
+                                    style="margin-top: 1.5rem; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden;">
+                                    <div
+                                        style="width: 50%; height: 100%; background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue);">
+                                    </div>
                                 </div>
                                 <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                                    <button class="cta-button btn-small outline-glow" style="flex: 1;">VIEW BRACKET</button>
+                                    <button class="cta-button btn-small outline-glow" style="flex: 1;">VIEW
+                                        BRACKET</button>
                                     <button class="cta-button btn-small btn-blue" style="flex: 1;">SCORE ENTRY</button>
                                 </div>
                             </div>
@@ -260,13 +347,16 @@
                             <div class="glass-card" style="padding: 1.5rem; background: rgba(255,255,255,0.03);">
                                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                                     <div>
-                                        <h3 class="text-white" style="margin: 0; font-size: 1.1rem;">Saturday Night League</h3>
-                                        <p class="text-muted" style="margin: 0.5rem 0 0; font-size: 0.8rem;">Date: Oct 24 | Reg Opens: 6 PM</p>
+                                        <h3 class="text-white" style="margin: 0; font-size: 1.1rem;">Saturday Night
+                                            League</h3>
+                                        <p class="text-muted" style="margin: 0.5rem 0 0; font-size: 0.8rem;">Date: Oct
+                                            24 | Reg Opens: 6 PM</p>
                                     </div>
                                     <span class="status-badge normal-grey">WAITING</span>
                                 </div>
                                 <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                                    <button class="cta-button btn-small outline-glow" style="width: 100%;">MANAGE REGISTRATION</button>
+                                    <button class="cta-button btn-small outline-glow" style="width: 100%;">MANAGE
+                                        REGISTRATION</button>
                                 </div>
                             </div>
                         </div>
@@ -276,27 +366,33 @@
                     <div style="display: flex; flex-direction: column; gap: 2rem;">
                         <div class="glass-card" style="padding: 1.5rem;">
                             <h3>Prize Pool</h3>
-                            <div class="stat-number neon-text-pink" style="font-size: 2.5rem; margin-top: 1rem;">$2,450.00</div>
-                            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0;">Secured: $1,200 | Potential: $1,250</p>
+                            <div class="stat-number neon-text-pink" style="font-size: 2.5rem; margin-top: 1rem;">
+                                $2,450.00</div>
+                            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0;">Secured: $1,200 |
+                                Potential: $1,250</p>
                         </div>
 
                         <div class="glass-card" style="padding: 1.5rem;">
                             <h3>Current Leaderboard</h3>
                             <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
                                     <span class="text-white">1. TEAM VORTEX</span>
                                     <span class="neon-text-blue">1,420 pts</span>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
                                     <span class="text-white">2. THE STRIKERS</span>
                                     <span class="neon-text-blue">1,385 pts</span>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
                                     <span class="text-white">3. COSMIC BOWLERS</span>
                                     <span class="neon-text-blue">1,310 pts</span>
                                 </div>
                             </div>
-                            <button class="cta-button btn-small outline-glow" style="width: 100%; margin-top: 1.5rem;">FULL STANDINGS</button>
+                            <button class="cta-button btn-small outline-glow"
+                                style="width: 100%; margin-top: 1.5rem;">FULL STANDINGS</button>
                         </div>
                     </div>
                 </div>
@@ -331,22 +427,29 @@
                 <div id="slots-container" class="timetable-grid">
                     <!-- Data injected by JS -->
                 </div>
-                
+
                 <!-- Bulk Reserve Form -->
-                <div id="bulk-reserve-form" class="booking-form" style="display: none; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div id="bulk-reserve-form" class="booking-form"
+                    style="display: none; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
                     <div id="bulk-time-container" style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.9rem; color: var(--neon-blue); display: block; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Start Time</label>
-                        <select id="bulk-time-select" class="form-select" style="width: 100%; height: 45px; font-size: 1.1rem;">
+                        <label
+                            style="font-size: 0.9rem; color: var(--neon-blue); display: block; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Start
+                            Time</label>
+                        <select id="bulk-time-select" class="form-select"
+                            style="width: 100%; height: 45px; font-size: 1.1rem;">
                             <!-- Options populated by JS: 10:00 to 23:00 -->
                         </select>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Team / Group Name</label>
-                        <input type="text" id="bulk-team-name" class="form-input" placeholder="e.g. Birthday Bash" style="width: 100%;">
+                        <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Team /
+                            Group Name</label>
+                        <input type="text" id="bulk-team-name" class="form-input" placeholder="e.g. Birthday Bash"
+                            style="width: 100%;">
                     </div>
                     <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
                         <div style="flex: 1;">
-                            <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Players</label>
+                            <label
+                                style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Players</label>
                             <select id="bulk-players-count" class="form-select" style="width: 100%;">
                                 <option value="1">1 Player</option>
                                 <option value="2">2 Players</option>
@@ -357,17 +460,22 @@
                             </select>
                         </div>
                         <div style="flex: 1;">
-                            <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Duration (min)</label>
+                            <label
+                                style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Duration
+                                (min)</label>
                             <input type="number" id="bulk-duration" class="form-input" value="60" style="width: 100%;">
                         </div>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Player Details & Bumpers</label>
+                        <label style="font-size: 0.9rem; color: #aaa; display: block; margin-bottom: 0.5rem;">Player
+                            Details & Bumpers</label>
                         <div id="bulk-player-inputs" style="display: flex; flex-direction: column; gap: 0.8rem;">
                             <!-- Dynamic inputs here -->
                         </div>
                     </div>
-                    <button class="cta-button btn-green" id="confirm-bulk-reserve" style="width: 100%; margin-top: 1rem; padding: 1rem; font-weight: bold;">Confirm Multi-Lane Booking</button>
+                    <button class="cta-button btn-green" id="confirm-bulk-reserve"
+                        style="width: 100%; margin-top: 1rem; padding: 1rem; font-weight: bold;">Confirm Multi-Lane
+                        Booking</button>
                 </div>
             </div>
             <div class="modal-footer">
@@ -376,6 +484,49 @@
         </div>
     </div>
 
+    <!-- Tournament Modal -->
+    <div id="tournament-modal" class="modal-overlay">
+        <div class="modal-content glass-card" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 id="tourney-modal-title">Create Tournament</h2>
+                <button class="close-modal" id="close-tourney-modal">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <input type="hidden" id="tourney-edit-id">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Tournament Name</label>
+                    <input type="text" id="tourney-name-input" class="form-input" placeholder="e.g. Smash Fest 2026" style="width: 100%;">
+                </div>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Status</label>
+                        <select id="tourney-status-select" class="form-select" style="width: 100%;">
+                            <option value="waiting">Waiting</option>
+                            <option value="live">Live</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Stage</label>
+                        <input type="text" id="tourney-stage-input" class="form-input" placeholder="e.g. Finals" style="width: 100%;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Current Players</label>
+                        <input type="number" id="tourney-players-input" class="form-input" value="0" style="width: 100%;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Total Slots</label>
+                        <input type="number" id="tourney-total-input" class="form-input" value="64" style="width: 100%;">
+                    </div>
+                </div>
+                <button class="cta-button primary-glow" id="save-tourney-btn" style="width: 100%; margin-top: 1rem;">SAVE TOURNAMENT</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>
