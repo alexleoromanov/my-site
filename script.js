@@ -640,13 +640,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             selectedLanes.forEach(laneNum => {
                 const finalLane = laneNum.padStart(2, '0');
-                if (!laneBookings[finalLane]) laneBookings[finalLane] = {};
-                
                 if (type === 'available') {
-                    if (laneBookings[finalLane]) {
-                        delete laneBookings[finalLane][timeStr];
-                    }
+                    // Clear ALL statuses for this lane
+                    laneBookings[finalLane] = {};
                 } else {
+                    if (!laneBookings[finalLane]) laneBookings[finalLane] = {};
                     laneBookings[finalLane][timeStr] = { type: type };
                 }
             });

@@ -167,59 +167,63 @@ h1, h2, h3 {
 }
 
 .btn-red {
-    border: 2px solid #ff3366;
-    color: #ff3366;
-    background: rgba(255, 51, 102, 0.05);
-    box-shadow: inset 0 0 10px rgba(255,51,102,0.2), 0 0 10px rgba(255,51,102,0.2);
+    border: 2px solid var(--neon-pink);
+    color: var(--neon-pink);
+    background: rgba(255, 0, 234, 0.05);
+    box-shadow: inset 0 0 10px rgba(255,0,234,0.3), 0 0 10px rgba(255,0,234,0.3);
 }
 .btn-red:hover {
-    background: #ff3366;
+    background: var(--neon-pink);
     color: var(--bg-dark);
-    box-shadow: 0 0 20px #ff3366;
+    box-shadow: 0 0 20px var(--neon-pink);
 }
 
 .btn-blue {
-    border: 2px solid #00f3ff;
-    color: #00f3ff;
+    border: 2px solid var(--neon-blue);
+    color: var(--neon-blue);
     background: rgba(0, 243, 255, 0.05);
+    box-shadow: inset 0 0 10px rgba(0,243,255,0.3), 0 0 10px rgba(0,243,255,0.3);
 }
 .btn-blue:hover {
-    background: #00f3ff;
+    background: var(--neon-blue);
     color: var(--bg-dark);
-    box-shadow: 0 0 15px #00f3ff;
+    box-shadow: 0 0 20px var(--neon-blue);
 }
 
 .btn-yellow {
     border: 2px solid #ffc800;
     color: #ffc800;
     background: rgba(255, 200, 0, 0.05);
+    box-shadow: inset 0 0 10px rgba(255,200,0,0.3), 0 0 10px rgba(255,200,0,0.3);
 }
 .btn-yellow:hover {
     background: #ffc800;
     color: var(--bg-dark);
-    box-shadow: 0 0 15px #ffc800;
+    box-shadow: 0 0 20px #ffc800;
 }
 
 .btn-white {
     border: 2px solid #ffffff;
     color: #ffffff;
     background: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.3), 0 0 10px rgba(255,255,255,0.3);
 }
 .btn-white:hover {
     background: #ffffff;
     color: var(--bg-dark);
-    box-shadow: 0 0 15px #ffffff;
+    box-shadow: 0 0 20px #ffffff;
 }
 
 .btn-purple {
     border: 2px solid #b44dff;
     color: #b44dff;
     background: rgba(180, 77, 255, 0.05);
+    box-shadow: inset 0 0 10px rgba(180,77,255,0.3), 0 0 10px rgba(180,77,255,0.3);
 }
 .btn-purple:hover {
     background: #b44dff;
     color: var(--bg-dark);
-    box-shadow: 0 0 15px #b44dff;
+    box-shadow: 0 0 20px #b44dff;
 }
 
 .action-selector {
