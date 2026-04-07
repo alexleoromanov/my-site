@@ -230,10 +230,12 @@ h1, h2, h3 {
 
 #stage-selection-board {
     backdrop-filter: blur(12px);
-    background: rgba(10, 15, 28, 0.95) !important;
+    background: #0a0f1c !important; /* Solid dark background to hide fields behind it */
     border-radius: 12px;
-    width: 240px; /* Slightly wider to prevent text squeeze */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 243, 255, 0.1) !important;
+    width: 260px; /* Even wider to prevent text squeeze */
+    border: 1px solid var(--neon-blue) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 243, 255, 0.2) !important;
+    z-index: 999 !important; /* Ensure it's on top of everything */
 }
 
 #tourney-stage-display:hover {
