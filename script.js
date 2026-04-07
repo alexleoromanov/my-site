@@ -993,8 +993,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 6. Tournament Management Logic
         let tournamentsState = [
-            { id: 1, name: "Cosmic Bowl Open '26", status: 'live', stage: 'QUARTERFINALS', players: 32, total: 64 },
-            { id: 2, name: "Saturday Night League", status: 'waiting', stage: 'WAITING', players: 0, total: 48 }
+            { id: 1, name: "Cosmic Bowl Open '26", status: 'live', stage: 'QUARTERFINALS', players: 32, total: 64, lanes: ['01', '02', '03', '04'], days: ['Sat', 'Sun'], time: '18:00' },
+            { id: 2, name: "Saturday Night League", status: 'waiting', stage: 'WAITING', players: 0, total: 48, lanes: ['05', '06'], days: ['Sat'], time: '20:00' }
         ];
 
         const tourneyListContainer = document.getElementById('tournament-list-container');
@@ -1017,14 +1017,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 const progress = t.total > 0 ? (t.players / t.total) * 100 : 0;
                 const statusColor = t.status === 'live' ? 'var(--neon-blue)' : (t.status === 'completed' ? '#00ff66' : '#888');
 
+                const laneTags = t.lanes && t.lanes.length > 0 
+                    ? `<div style="display: flex; gap: 0.3rem; margin-top: 0.8rem; flex-wrap: wrap;">${t.lanes.map(l => `<span style="font-size: 0.7rem; background: rgba(0,243,255,0.1); color: var(--neon-blue); padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid rgba(0,243,255,0.2);">LANE ${l}</span>`).join('')}</div>`
+                    : '';
+
+                const scheduleInfo = t.days && t.days.length > 0 && t.time
+                    ? `<p style="margin: 0.8rem 0 0; font-size: 0.85rem; color: #aaa;"><i class="bi bi-calendar3"></i> ${t.days.join(', ')} @ ${t.time}</p>`
+                    : '';
+
                 card.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div>
+                        <div style="flex: 1;">
                             <h3 class="${t.status === 'live' ? 'neon-text-blue' : 'text-white'}" style="margin: 0; font-size: 1.2rem;">${t.name}</h3>
                             <p class="text-muted" style="margin: 0.5rem 0 0; font-size: 0.9rem;">
                                 Status: <span style="color: ${statusColor}; font-weight: bold; text-transform: uppercase;">${t.status}</span> 
                                 | Players: ${t.players} / ${t.total}
                             </p>
+                            ${scheduleInfo}
+                            ${laneTags}
                         </div>
                         <span class="status-badge ${t.status === 'live' ? 'normal-blue' : 'normal-grey'}">${t.stage.toUpperCase()}</span>
                     </div>
@@ -1056,7 +1066,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const nameInput = document.getElementById('tourney-name-input');
             const statusSelect = document.getElementById('tourney-status-select');
             const playersInput = document.getElementById('tourney-players-input');
-            const totalInput = document.getElementById('tourney-total-input');
+            const timeInput = document.getElementById('tourney-time-input');
+            const laneGrid = document.querySelector('.lane-checkbox-grid');
+            const dayRow = document.querySelector('.day-checkbox-row');
+
+            // Reset lane grid
+            if (laneGrid) {
+                laneGrid.innerHTML = '';
+                for (let i = 1; i <= 16; i++) {
+                    const lNum = i < 10 ? `0${i}` : `${i}`;
+                    const label = document.createElement('label');
+                    label.className = 'lane-check';
+                    label.innerHTML = `<input type="checkbox" value="${lNum}"><span>${lNum}</span>`;
+                    laneGrid.appendChild(label);
+                }
+            }
 
             // Hide stage board initially
             if (stageSelectionBoard) stageSelectionBoard.style.display = 'none';
@@ -1070,6 +1094,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (tourneyStageVal) tourneyStageVal.innerText = t.stage;
                 playersInput.value = t.players;
                 totalInput.value = t.total;
+                if (timeInput) timeInput.value = t.time || '18:00';
+
+                // Set lanes
+                if (laneGrid && t.lanes) {
+                    laneGrid.querySelectorAll('input').forEach(cb => {
+                        cb.checked = t.lanes.includes(cb.value);
+                    });
+                }
+                // Set days
+                if (dayRow && t.days) {
+                    dayRow.querySelectorAll('input').forEach(cb => {
+                        cb.checked = t.days.includes(cb.value);
+                    });
+                }
             } else {
                 title.innerText = 'Create Tournament';
                 idInput.value = '';
@@ -1078,6 +1116,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (tourneyStageVal) tourneyStageVal.innerText = 'QUALIFIERS';
                 playersInput.value = '0';
                 totalInput.value = '64';
+                if (timeInput) timeInput.value = '18:00';
+                if (laneGrid) laneGrid.querySelectorAll('input').forEach(cb => cb.checked = false);
+                if (dayRow) dayRow.querySelectorAll('input').forEach(cb => cb.checked = false);
             }
 
             // Sync active button in board
@@ -1132,12 +1173,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (saveTourneyBtn) {
             saveTourneyBtn.addEventListener('click', () => {
                 const id = document.getElementById('tourney-edit-id').value;
+                
+                // Get selected lanes
+                const selectedLanes = [];
+                document.querySelectorAll('.lane-check input:checked').forEach(cb => selectedLanes.push(cb.value));
+                
+                // Get selected days
+                const selectedDays = [];
+                document.querySelectorAll('.day-check input:checked').forEach(cb => selectedDays.push(cb.value));
+
                 const tourneyData = {
                     name: document.getElementById('tourney-name-input').value || 'New Tournament',
                     status: document.getElementById('tourney-status-select').value,
                     stage: tourneyStageVal ? tourneyStageVal.innerText : 'TBD',
                     players: parseInt(document.getElementById('tourney-players-input').value) || 0,
-                    total: parseInt(document.getElementById('tourney-total-input').value) || 64
+                    total: parseInt(document.getElementById('tourney-total-input').value) || 64,
+                    lanes: selectedLanes,
+                    days: selectedDays,
+                    time: document.getElementById('tourney-time-input').value || '18:00'
                 };
 
                 if (id) {
