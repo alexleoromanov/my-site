@@ -1066,6 +1066,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const nameInput = document.getElementById('tourney-name-input');
             const statusSelect = document.getElementById('tourney-status-select');
             const playersInput = document.getElementById('tourney-players-input');
+            const totalInput = document.getElementById('tourney-total-input');
             const timeInput = document.getElementById('tourney-time-input');
             const laneGrid = document.querySelector('.lane-checkbox-grid');
             const dayRow = document.querySelector('.day-checkbox-row');
