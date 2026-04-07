@@ -220,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             resetBookingsBtn.addEventListener('click', () => {
                 if (confirm('Are you sure you want to clear ALL bookings and arrivals for today?')) {
                     laneBookings = {};
-                    totalBookingsCounter = 0;
                     updateDashboardLanes();
                     updateDashboardStats(); // This now handles arrivals and counters
                 }
@@ -744,8 +743,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             });
             
-            totalBookingsCounter += selectedLanes.size;
-
             updateDashboardLanes();
             updateDashboardStats();
             clearLaneSelection();
