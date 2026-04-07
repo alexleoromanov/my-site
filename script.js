@@ -1044,6 +1044,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        const tourneyStageDisplay = document.getElementById('tourney-stage-display');
+        const tourneyStageVal = document.getElementById('tourney-stage-val');
+        const stageSelectionBoard = document.getElementById('stage-selection-board');
+
         function openTourneyModal(editId = null) {
             if (!tourneyModal) return;
             
@@ -1051,9 +1055,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const idInput = document.getElementById('tourney-edit-id');
             const nameInput = document.getElementById('tourney-name-input');
             const statusSelect = document.getElementById('tourney-status-select');
-            const stageInput = document.getElementById('tourney-stage-input');
             const playersInput = document.getElementById('tourney-players-input');
             const totalInput = document.getElementById('tourney-total-input');
+
+            // Hide stage board initially
+            if (stageSelectionBoard) stageSelectionBoard.style.display = 'none';
 
             if (editId) {
                 const t = tournamentsState.find(x => x.id === editId);
@@ -1061,7 +1067,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 idInput.value = t.id;
                 nameInput.value = t.name;
                 statusSelect.value = t.status;
-                stageInput.value = t.stage;
+                if (tourneyStageVal) tourneyStageVal.innerText = t.stage;
                 playersInput.value = t.players;
                 totalInput.value = t.total;
             } else {
@@ -1069,13 +1075,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 idInput.value = '';
                 nameInput.value = '';
                 statusSelect.value = 'waiting';
-                stageInput.value = 'Registration';
+                if (tourneyStageVal) tourneyStageVal.innerText = 'QUALIFIERS';
                 playersInput.value = '0';
                 totalInput.value = '64';
             }
 
+            // Sync active button in board
+            const currentStage = tourneyStageVal ? tourneyStageVal.innerText : '';
+            document.querySelectorAll('.btn-stage').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-stage') === currentStage);
+            });
+
             tourneyModal.classList.add('active');
         }
+
+        // Toggle Stage Selection Board
+        if (tourneyStageDisplay) {
+            tourneyStageDisplay.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = stageSelectionBoard.style.display === 'none';
+                stageSelectionBoard.style.display = isHidden ? 'block' : 'none';
+            });
+        }
+
+        // Stage Selection Logic
+        document.querySelectorAll('.btn-stage').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const stage = btn.getAttribute('data-stage');
+                if (tourneyStageVal) tourneyStageVal.innerText = stage;
+                
+                // Update active state
+                document.querySelectorAll('.btn-stage').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Hide board
+                stageSelectionBoard.style.display = 'none';
+            });
+        });
+
+        // Close board when clicking outside
+        document.addEventListener('click', (e) => {
+            if (stageSelectionBoard && !stageSelectionBoard.contains(e.target) && e.target !== tourneyStageDisplay) {
+                stageSelectionBoard.style.display = 'none';
+            }
+        });
 
         function deleteTournament(id) {
             if (confirm('Are you sure you want to remove this tournament?')) {
@@ -1093,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tourneyData = {
                     name: document.getElementById('tourney-name-input').value || 'New Tournament',
                     status: document.getElementById('tourney-status-select').value,
-                    stage: document.getElementById('tourney-stage-input').value || 'TBD',
+                    stage: tourneyStageVal ? tourneyStageVal.innerText : 'TBD',
                     players: parseInt(document.getElementById('tourney-players-input').value) || 0,
                     total: parseInt(document.getElementById('tourney-total-input').value) || 64
                 };

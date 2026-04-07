@@ -506,9 +506,24 @@
                             <option value="completed">Completed</option>
                         </select>
                     </div>
-                    <div style="flex: 1;">
+                    <div style="flex: 1; position: relative;">
                         <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Stage</label>
-                        <input type="text" id="tourney-stage-input" class="form-input" placeholder="e.g. Finals" style="width: 100%;">
+                        <div id="tourney-stage-display" class="form-input" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+                            <span id="tourney-stage-val">QUALIFIERS</span>
+                            <span style="font-size: 0.7rem; color: var(--neon-blue);">▼</span>
+                        </div>
+                        
+                        <!-- Stage Selection Board -->
+                        <div id="stage-selection-board" class="glass-card" style="display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 100; margin-top: 0.5rem; padding: 1rem; border: 1px solid var(--neon-blue); box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                <button class="cta-button btn-small btn-stage" data-stage="PRACTICE">PRACTICE</button>
+                                <button class="cta-button btn-small btn-stage" data-stage="OPEN">OPEN</button>
+                                <button class="cta-button btn-small btn-stage" data-stage="QUALIFIERS">QUALIFIERS</button>
+                                <button class="cta-button btn-small btn-stage" data-stage="QUARTERFINALS">QUARTERFINALS</button>
+                                <button class="cta-button btn-small btn-stage" data-stage="SEMI-FINALS">SEMI-FINALS</button>
+                                <button class="cta-button btn-small btn-stage" data-stage="GRAND FINAL">GRAND FINAL</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">

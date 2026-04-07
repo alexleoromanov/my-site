@@ -192,16 +192,38 @@ h1, h2, h3 {
     box-shadow: 0 0 20px var(--neon-pink);
 }
 
-.btn-blue {
-    border: 2px solid var(--neon-blue);
-    color: var(--neon-blue);
-    background: rgba(0, 243, 255, 0.05);
-    box-shadow: inset 0 0 10px rgba(0,243,255,0.3), 0 0 10px rgba(0,243,255,0.3);
-}
 .btn-blue:hover {
     background: var(--neon-blue);
     color: var(--bg-dark);
     box-shadow: 0 0 20px var(--neon-blue);
+}
+
+.btn-stage {
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    text-transform: uppercase;
+}
+
+.btn-stage:hover {
+    border-color: var(--neon-blue);
+    color: var(--neon-blue);
+    background: rgba(0, 243, 255, 0.05);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.btn-stage.active {
+    border-color: var(--neon-blue);
+    color: var(--neon-blue);
+    background: rgba(0, 243, 255, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+#tourney-stage-display:hover {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
 }
 
 .btn-yellow {
