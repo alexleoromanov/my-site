@@ -217,10 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let cumulativeBookingsCount = 0; // Cumulative tally that doesn't reset on clear
 
         // 6. Tournament Management Logic
-        let tournamentsState = [
-            { id: 1, name: "Cosmic Bowl Open '26", status: 'live', stage: 'QUARTERFINALS', players: 32, total: 64, lanes: ['01', '02', '03', '04'], days: ['Sat', 'Sun'], time: '18:00' },
-            { id: 2, name: "Saturday Night League", status: 'waiting', stage: 'WAITING', players: 0, total: 48, lanes: ['05', '06'], days: ['Sat'], time: '20:00' }
-        ];
+        let tournamentsState = [];
 
 
         const resetBookingsBtn = document.getElementById('reset-bookings-btn');
