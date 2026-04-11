@@ -178,8 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
             allBookings.forEach(b => {
                 const tr = document.createElement('tr');
                 const statusClass = b.type === 'active' ? 'neon-text-pink' : 'neon-text-blue';
+                let labelPrefix = 'Lane';
+                if (String(b.lane).startsWith('B')) labelPrefix = 'Table';
+                if (String(b.lane).startsWith('SNK')) labelPrefix = 'Snooker';
                 tr.innerHTML = `
-                    <td>Lane ${b.lane}</td>
+                    <td>${labelPrefix} ${b.lane}</td>
                     <td>${b.time}</td>
                     <td>${b.teamName || 'Independent'}</td>
                     <td class="${statusClass}">${b.type.toUpperCase()}</td>
@@ -826,7 +829,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isMultiSelectActive || e.ctrlKey || e.shiftKey) {
                     toggleLaneSelection(laneNum, box);
                 } else {
-                    if (modalLaneTitle) modalLaneTitle.innerText = `Lane ${laneNum} Timetable`;
+                    let prefix = 'Lane ';
+                    if (laneNum.startsWith('B')) prefix = 'Table ';
+                    if (laneNum === 'SNK') prefix = 'Snooker ';
+                    if (modalLaneTitle) modalLaneTitle.innerText = `${prefix}${laneNum} Timetable`;
                     
                     // Ensure bulk form is hidden and slots are shown
                     if (slotsContainer) slotsContainer.style.display = 'grid';
@@ -1047,7 +1053,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const statusColor = t.status === 'live' ? 'var(--neon-blue)' : (t.status === 'completed' ? '#00ff66' : '#888');
 
                 const laneTags = t.lanes && t.lanes.length > 0 
-                    ? `<div style="display: flex; gap: 0.3rem; margin-top: 0.8rem; flex-wrap: wrap;">${t.lanes.map(l => `<span style="font-size: 0.7rem; background: rgba(0,243,255,0.1); color: var(--neon-blue); padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid rgba(0,243,255,0.2);">LANE ${l}</span>`).join('')}</div>`
+                    ? `<div style="display: flex; gap: 0.3rem; margin-top: 0.8rem; flex-wrap: wrap;">${t.lanes.map(l => {
+                        let pref = 'LANE';
+                        if (String(l).startsWith('B')) pref = 'TABLE';
+                        if (String(l) === 'SNK') pref = 'SNOOKER';
+                        return `<span style="font-size: 0.7rem; background: rgba(0,243,255,0.1); color: var(--neon-blue); padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid rgba(0,243,255,0.2);">${pref} ${l}</span>`;
+                    }).join('')}</div>`
                     : '';
 
                 const scheduleInfo = t.days && t.days.length > 0 && t.time
